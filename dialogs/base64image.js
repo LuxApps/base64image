@@ -109,6 +109,12 @@ CKEDITOR.dialog.add("base64imageDialog", function(editor){
 			if(n && "files" in n && n.files && n.files.length > 0 && n.files[0]) {
 				if("type" in n.files[0] && !n.files[0].type.match("image.*")) return;
 				if(!FileReader) return;
+				var size = n.files[0].size;
+				if (size >1000000) //length in bytes
+				{
+					imgPreview.getElement().setHtml("Max image size is 1MB.");
+					return;
+				}
 				imgPreview.getElement().setHtml("Loading...");
 				var fr = new FileReader();
 				fr.onload = (function(f) { return function(e) {
